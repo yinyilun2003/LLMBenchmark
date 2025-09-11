@@ -1,0 +1,5 @@
+Developed a benchmark system to evaluate large model hosting platform performance, delivering insights that guided horizontal service expansion and scalability planning.
+Designed end-to-end benchmarking for LLaMA3, Qwen3, and Gemini2 using FastAPI, Uvicorn, Kafka, and PostgreSQL, enabling parallel execution on AWS with modular APIs and task management.
+Built automated end-to-end and unit tests to ensure stability of benchmark submissions, execution, and reporting.
+Implemented a staged continuous deployment pipeline to streamline feature releases and enable seamless incremental updates.
+Generated benchmark evaluation reports to compare model performance across multiple dimensions for faster decision-making.
