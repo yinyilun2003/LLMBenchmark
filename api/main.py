@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
-from routers import auth, user, task, runs, metrics, reports, datasets, adapters, webhooks, health, admin, log
+from .routers.v1 import auth, user, task, runs, metrics, reports, datasets, adapters, webhooks, health, admin, log
 
 app = FastAPI(title="LLM Benchmark API", version="1.0")
 

@@ -6,13 +6,14 @@ from typing import List, Optional
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer, hash_password
+from fastapi.security import OAuth2PasswordRequestForm, OAuth2PasswordBearer
+from passlib.context import CryptContext
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 import os
 
 # ==== Project schemas ====
-from models.schemas import (
+from api.models.schemas import (
     UserSignup,
     UserLogin,
     UserResponse,
@@ -24,7 +25,7 @@ from models.schemas import (
 # 你应当在 core/db.py 提供 get_db，并在 models/user.py 定义 User ORM
 # 这里给出最小接口假定，便于即刻使用。
 from core.db import get_db               # -> def get_db() -> Generator[Session, None, None]
-from models.user import User as UserORM  # -> SQLAlchemy model with fields见下方注释
+from api.models.user import User as UserORM  # -> SQLAlchemy model with fields见下方注释
 
 # 期望的 User ORM 字段：
 # id: UUID(primary key), username: str(unique), email: str(unique),
@@ -166,7 +167,7 @@ def list_users(
 
 
 from fastapi import APIRouter, HTTPException
-from models.schemas import UserSignup, UserLogin, UserResponse
+from api.models.schemas import UserSignup, UserLogin, UserResponse
 
 router = APIRouter()
 
