@@ -17,6 +17,8 @@ from api.models.task import Task as TaskORM
 from api.models.metric import Metric as MetricORM
 from api.routers.v1.user import get_current_user
 from api.models.schemas import RunSummary
+import csv
+
 
 router = APIRouter(prefix="/reports", tags=["Reports"])
 
@@ -175,13 +177,22 @@ def export_csv(
     )
 
     buf = StringIO()
-    buf.write("ts,latency_ms,http_status,prompt_tokens,completion_tokens,cost_usd,quality,error\n")
+    writer = csv.writer(buf)
+    writer.writerow([
+        "ts","latency_ms","http_status","prompt_tokens",
+        "completion_tokens","cost_usd","quality","error"
+    ])
     for m in rows:
-        buf.write(
-            f"{m.ts.isoformat()},{m.latency_ms or ''},{m.http_status or ''},"
-            f"{m.prompt_tokens or ''},{m.completion_tokens or ''},"
-            f"{m.cost_usd or ''},{m.quality or ''},\"{(m.error or '').replace('\"','''')}\"\n"
-        )
+        writer.writerow([
+            m.ts.isoformat() if m.ts else "",
+            m.latency_ms or "",
+            m.http_status or "",
+            m.prompt_tokens or "",
+            m.completion_tokens or "",
+            m.cost_usd or "",
+            m.quality or "",
+            (m.error or ""),
+        ])
     buf.seek(0)
     filename = f"metrics_{task_id}.csv"
     return StreamingResponse(
